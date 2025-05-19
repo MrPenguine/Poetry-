@@ -1,0 +1,23 @@
+name: Poetry Lock Diff
+
+on:
+  pull_request:
+    paths:
+      - 'poetry.lock'
+
+jobs:
+  diff-poetry-lock:
+    runs-on: ubuntu-latest
+    name: Diff poetry.lock
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Diff poetry.lock
+        uses: ./  # Uses the action from the root directory of your repository
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: specify a custom path if your lockfile is not at the default location
+          # lockfile_path: "custom/path/to/poetry.lock"
